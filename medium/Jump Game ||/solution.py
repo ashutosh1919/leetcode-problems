@@ -1,12 +1,13 @@
-# Time complexity: O(n*n)
+# Time complexity: O(n)
 # Approach: Dynamic Programming (https://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/)
 
 class Solution:
     def jump(self, nums: List[int]) -> int:
         n = len(nums)
-        dp = [n+1]*n
-        dp[n-1] = 0
-        for i in range(n-2, -1, -1):
-            for j in range(i+1, min(i+nums[i]+1, n)):
-                dp[i] = min(dp[i], dp[j]+1)
-        return dp[0]
+        for i in range(1, n):
+            nums[i] = max(nums[i]+i, nums[i-1])
+        j, ans = 0, 0
+        while j<n-1:
+            ans+=1
+            j = nums[j]
+        return ans
